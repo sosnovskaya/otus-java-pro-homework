@@ -1,6 +1,8 @@
 package ru.otus.homework;
 
-public class Customer {
+import java.util.Objects;
+
+public class Customer implements Comparable<Customer> {
     private final long id;
     private String name;
     private long scores;
@@ -9,6 +11,12 @@ public class Customer {
         this.id = id;
         this.name = name;
         this.scores = scores;
+    }
+
+    public Customer(Customer customer) {
+        this.id = customer.id;
+        this.name = customer.name;
+        this.scores = customer.scores;
     }
 
     public long getId() {
@@ -43,20 +51,18 @@ public class Customer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-
-        if (id != customer.id) return false;
-        if (scores != customer.scores) return false;
-        return name != null ? name.equals(customer.name) : customer.name == null;
+        return getId() == customer.getId();
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (int) (scores ^ (scores >>> 32));
-        return result;
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public int compareTo(Customer c) {
+        return (int) (this.scores - c.scores);
     }
 }
