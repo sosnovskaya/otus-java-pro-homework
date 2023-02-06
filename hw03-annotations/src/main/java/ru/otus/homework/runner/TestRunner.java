@@ -43,8 +43,8 @@ public class TestRunner {
 
 	private static void runTest(Method method) {
 		var testClass = instantiateNoArgConstructor(clazz);
-		before.forEach(before -> callMethod(testClass, before));
 		try {
+			before.forEach(before -> callMethod(testClass, before));
 			callMethod(testClass, method);
 			successfulTests += 1;
 		} catch (Exception e) {
@@ -72,7 +72,7 @@ public class TestRunner {
 			tests.add(method);
 	}
 
-	public static <T> T instantiateNoArgConstructor(Class<T> type) {
+	private static <T> T instantiateNoArgConstructor(Class<T> type) {
 		try {
 			return type.getDeclaredConstructor().newInstance();
 
@@ -81,7 +81,7 @@ public class TestRunner {
 		}
 	}
 
-	public static void callMethod(Object object, Method method, Object... args) {
+	private static void callMethod(Object object, Method method, Object... args) {
 		try {
 			method.setAccessible(true);
 			method.invoke(object, args);
