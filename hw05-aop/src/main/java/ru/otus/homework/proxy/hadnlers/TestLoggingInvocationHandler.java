@@ -27,7 +27,7 @@ public class TestLoggingInvocationHandler implements InvocationHandler {
 	}
 	private Set<String> getLogAnnotatedMethods() {
 		var methodsWithAnnotation = new HashSet<String>();
-		Method[] testLoggingMethods = TestLogging.class.getMethods();
+		Method[] testLoggingMethods = externalClass.getClass().getMethods();
 		for (Method method : testLoggingMethods) {
 			if (checkTestAnnotation(method)) {
 				methodsWithAnnotation.add(getSignature(method));
